@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head >
+    <meta name="baidu-site-verification" content="U67Xy1Qfos" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> LZKの博客 </title>
+
+    <link href="../static/image/me.jpg" th:href="@{/image/me.jpg}" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+
+</head>
+<body>
+
+<!--导航-->
+<nav id="nav" class="gird-header" style="display: none">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui olive header item" style="font-family: STSong">BLOG</h2>
+            <!--<div class="right m-item item m-mobile-hide">-->
+            <a href="#" th:href="@{/}" class="active m-item item"><i class="home icon"></i>首页</a>
+                <a href="#" th:href="@{/types/-1}" class="m-item item"><i class="clone outline icon"></i>分类</a>
+                <a href="#" th:href="@{/archives}" class="m-item item"><i class="clock icon"></i>时间轴</a>
+                <a href="#" th:href="@{/about}" class="m-item item"><i class="info icon"></i>关于我</a>
+            <!--</div>-->
+            <div class="right m-item item">
+                <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                    <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">
+                        <input style="color: white" type="text" name="query" placeholder="Search...." th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-hide" style="display: none">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+
+
+
+<!--顶部图片-->
+<div class="m-bg-class_outer" style="width: 100%;height: 750px">
+    <img src="../static/image/bg.jpg" th:src="@{/image/bg.jpg}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
+    <div class="m-bg-class_cover" align="center">
+        <div class="m-margin-top-maxx" align="center">
+            <img class="ui circular image" align="center" src="../static/image/me.jpg" th:src="@{/image/me.jpg}" style="width: 150px;height: 150px;">
+        </div>
+        <div class="m-font-size-title-mediul" align="center">LZK</div>
+
+        <div class="" align="center">
+            <a href="#" class="ui wechat circular icon button"><i class="weixin icon"></i></a>
+            <a href="#" class="ui qq circular icon button" data-content="2601665132" data-position="bottom center"><i class="qq icon"></i></a>
+            <a href="#" class="ui email circular icon button" data-content="2601665132@qq.com" data-position="bottom center"><i class="envelope  icon"></i></a>
+        </div>
+
+        <div class="ui wechat-qr flowing popup transition hidden">
+            <img src="../static/image/weChat.png" th:src="@{/image/weChat.png}" alt="" class="ui rounded image" style="width: 110px">
+            <div align="center">微信</div>
+        </div>
+        <div class="ui qq-qr flowing popup transition hidden">
+            <img src="../static/image/qq.jpg" th:src="@{/image/qq.jpg}" alt="" class="ui rounded image" style="width: 110px">
+            <div align="center">QQ</div>
+        </div>
+
+        <div class="m-font-size-text" align="center">欢迎来到我的博客</div>
+        <hr style="width: 40%">
+        <h5 class="m-font-size-text-init-title m-margin-top-large">最初的90%的代码用去了最初90%的开发时间</h5>
+        <h5 class="m-font-size-text-init-title">余下的10%的代码用掉另外90%的开发时间</h5>
+        <div id="waypoint" class="ui m-margin-top-large" align="center">
+            <a href="#" th:href="@{/}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>首页</a>
+            <a href="#" th:href="@{/types/-1}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" th:classappend="${n==2} ? 'active'"><i class="clone outline icon"></i>分类</a>
+            <a href="#" th:href="@{/archives}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="clock icon"></i>时间轴</a>
+            <a href="#" th:href="@{/message}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide" th:classappend="${n==6} ? 'active'"><i class="book icon"></i>留言板</a>
+            <a href="#" th:href="@{/about}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide" th:classappend="${n==9} ? 'active'"><i class="info icon"></i>关于我</a>
+        </div>
+        <div class="hiddenDiv"></div>
+    </div>
+
+</div>
+
+
+
+<!--最新推荐-->
+<div class="ui m-padded-tb-large">
+    <div class="ui m-container-small m-opacity">
+        <div class="ui secondary segment " align="center">
+            <i class="bookmark icon"></i>最新推荐
+        </div>
+    </div>
+    <div class="ui stackable m-container-mini m-opacity grid">
+        <div class="m-margin-tb-tiny four wide column" th:each="blog : ${recommendedBlogs}">
+            <a href="#" class="class_outer" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                <img src="../static/image/bg1.jpg" th:src="@{${blog.firstPicture}}"  alt="" class="ui rounded image">
+                <span class="class_cover" >
+                     <h4 class="m-font-size-blog-text m-margin-tb-tiny" th:text="${blog.title}">母猪产后护理</h4>
+                  </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!--中间内容-->
+<div class="m-padded-tb-big animated fadeIn">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <!--博客内容-->
+            <div class="ui vertical segment">
+                <div class="ui m-container-small m-opacity">
+                    <div class="ui secondary segment " align="center">
+                        <i class="bookmark icon"></i>最新文章
+                    </div>
+                </div>
+                <!--博文列表-->
+                <div class="ui padded segment m-padded-tb-large m-opacity" th:each="blog : ${pageInfo.list}">
+                    <div class="ui large aligned mobile reversed stackable grid">
+                        <!--博文信息-->
+                        <div class="eleven wide column ">
+                            <h3 class="ui header" ><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black m-title-font" th:text="${blog.title}">母猪产后护理</a></h3>
+                            <p class="m-text m-margin-top-max" th:text="|${blog.description}......|">母猪生产后首先要给母猪进行消毒，给母猪和猪仔一个干净、温暖的环境；在喂养产后的母猪时，要多给母猪喝水，多喂青绿、高蛋白的食物，食物的分量要适宜，不能一次性食用太多；猪舍保证适宜温度和湿度，利于母猪修养，猪仔也不会容易感冒...</p>
+                            <div class="ui m-margin-top-maxx grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="../static/image/me.jpg" th:src="${blog.avatar != null? blog.firstPblog.avatar:'/image/me.jpg'}"  alt="" class="ui avatar image">
+                                            <div class="content"><a href="#" th:href="@{/about}" target="_blank" class="header" th:text="${blog.nickname}" >LZK</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-12-12</span>
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> <span th:text="${blog.views}">2333</span>
+                                        </div>
+                                        <div class="item">
+                                            <i class="comment outline icon"></i> <span th:text="${blog.commentCount}">6666</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin" th:text="${blog.typeName}">综述文章</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--博文图片-->
+                        <div class="five wide column">
+                            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                                <img src="../static/image/bg1.jpg" style="width: 300px;height: 300px" th:src="@{${blog.firstPicture}}"  alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--分页-->
+            <div class="ui bottom attached segment m-opacity stackable grid">
+                <div class="three wide column" align="center">
+                    <a class="item" th:href="@{/(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}" th:unless="${pageInfo.isFirstPage}">上一页</a>
+                </div>
+
+                <div class="ten wide column" align="center">
+                    <p> <span th:text="${pageInfo.pageNum}"></span> / <span th:text="${pageInfo.pages}"></span> </p>
+                </div>
+
+                <div class="three wide column" align="center">
+                    <a class="item" th:href="@{/(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}" th:unless="${pageInfo.isLastPage}">下一页</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!--置顶图标-->
+<div id="toolbar" class="m-padded-tb-large m-fixed m-right-bottom" style="display: none">
+    <a href="#" class="ui teal icon button"><i class="chevron up icon"></i> </a>
+</div>
+
+
+
+<br>
+<br>
+<br>
+<!--底部栏-->
+<footer class="ui inverted vertical segment m-padded-tb-massive m-opacity">
+    <!--容器-->
+    <div class="ui center aligned container">
+        <div class="ui center aligned inverted divided stackable grid">
+            <div class="four wide column">
+                <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >联系我</div>
+                <!--<div id="newblog-container">-->
+                <!--<div class="ui inverted link list" th:fragment="newblogList">-->
+                <!--<a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item m-text-thin" th:each="blog : ${newblogs}" th:text="${blog.title}">最新文章</a>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="ui inverted link list">
+                    <div href="#" class="m-text-thin">Email：2601665132@qq.com</div>
+                    <div href="#" class="m-text-thin">QQ：2601665132</div>
+                </div>
+            </div>
+
+            <div class="four wide column" >
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--微信二维码-->
+                        <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >关注博主</div>
+                        <img src="../static/image/weChat.png" th:src="@{/image/weChat.png}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+
+            <!--博客运行时间统计-->
+            <div class="four wide column">
+                <div style="font-size: large;font-weight: bold" class="ui inverted  m-text-thin m-text-spaced m-margin-top">博客信息</div>
+                <!--<p id="htmer_time" class="item m-text-thin"></p>-->
+                <div id="blog-message">
+                    <div class="ui inverted link list" style="align-content: center;margin-top: 10px" th:fragment="blogMessage">
+                        <div class="m-text-thin" style="text-align: left;margin-left: 75px;">
+                            文章总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;" th:text="${blogTotal}"> 12 </h2> 篇
+                        </div>
+                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
+                            访问总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;" th:text="${blogViewTotal}"> 12 </h2> 次
+                        </div>
+                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
+                            评论总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;" th:text="${blogCommentTotal}"> 12 </h2> 条
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">博客已营业：<span id="htmer_time" class="item m-text-thin"></span> (*๓´╰╯`๓)</div>
+    </div>
+    </div>
+
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+
+<script>
+
+    // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+
+    $('#blog-message').load(/*[[@{/footer/blogmessage}]]*/"/footer/blogmessage");
+
+
+    // 运行时间统计
+    function secondToDate(second) {
+        if (!second) {
+            return 0;
+        }
+        var time = new Array(0, 0, 0, 0, 0);
+        if (second >= 365 * 24 * 3600) {
+            time[0] = parseInt(second / (365 * 24 * 3600));
+            second %= 365 * 24 * 3600;
+        }
+        if (second >= 24 * 3600) {
+            time[1] = parseInt(second / (24 * 3600));
+            second %= 24 * 3600;
+        }
+        if (second >= 3600) {
+            time[2] = parseInt(second / 3600);
+            second %= 3600;
+        }
+        if (second >= 60) {
+            time[3] = parseInt(second / 60);
+            second %= 60;
+        }
+        if (second > 0) {
+            time[4] = second;
+        }
+        return time;
+    }
+    function setTime() {
+        /*此处为网站的创建时间*/
+        var create_time = Math.round(new Date(Date.UTC(2020, 12, 12, 0, 0, 0)).getTime() / 1000);
+        var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+        currentTime = secondToDate((timestamp - create_time));
+        currentTimeHtml = currentTime[0] + '年' + currentTime[1] + '天'
+            + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4]
+            + '秒';
+        document.getElementById("htmer_time").innerHTML = currentTimeHtml;
+    }
+    setInterval(setTime, 1000);
+
+
+    var waypoint = new Waypoint({
+        element: document.getElementById('waypoint'),
+        handler: function(direction) {
+            if (direction == 'down') {
+                $('#toolbar').show(100);
+            } else {
+                $('#toolbar').hide(500);
+            }
+            console.log('Scrolled to waypoint!  ' + direction);
+        }
+    })
+
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-show');
+
+    });
+
+    // 显示微信
+    $('.wechat').popup({
+        popup : $('.wechat-qr'),
+        position: 'bottom center'
+    });
+
+    // 显示QQ
+    $('.qq').popup({
+        popup : $('.qq-qr'),
+        position: 'bottom center'
+    });
+
+    // 显示邮箱
+    $('.email').popup();
+
+    // 导航栏显示
+    var waypoint = new Waypoint({
+        element: document.getElementById('waypoint'),
+        handler: function(direction) {
+            if (direction == 'down') {
+                $('#nav').show(500);
+            } else {
+                $('#nav').hide(500);
+            }
+            console.log('Scrolled to waypoint!  ' + direction);
+        }
+    })
+</script>
+</body>
+</html>
